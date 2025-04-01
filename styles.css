@@ -1,0 +1,177 @@
+body {
+  font-family: Arial, sans-serif;
+  width: 360px;
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+h2 {
+  font-size: 14px;
+  margin: 0;
+}
+
+h3 {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.results {
+  display: flex;
+  justify-content: space-between;
+}
+
+.result-item {
+  text-align: center;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.grade {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.details {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.explanation {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.explanation p {
+  margin: 5px 0;
+}
+
+.summary {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.summary-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 3px 0;
+}
+
+.summary-row .value {
+  font-weight: bold;
+}
+
+.category {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.category-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.category-grades {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.current {
+  color: #1a73e8;
+}
+
+.possible {
+  color: #188038;
+}
+
+.status {
+  font-size: 11px;
+  font-style: italic;
+  margin-top: 3px;
+}
+
+.completed {
+  color: #1a73e8;
+}
+
+.pending {
+  color: #ea4335;
+}
+
+.assignments {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 2px solid #eee;
+  font-size: 12px;
+}
+
+.assignment {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  padding: 3px 5px;
+  border-radius: 3px;
+}
+
+.assignment.completed {
+  background-color: rgba(26, 115, 232, 0.1);
+}
+
+.assignment.pending {
+  background-color: rgba(234, 67, 53, 0.1);
+}
+
+.assignment-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assignment-score {
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+button {
+  padding: 8px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3367d6;
+}
