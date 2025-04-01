@@ -3,7 +3,8 @@
   "name": "Brightspace - D2L Grade Calculator",
   "version": "1.0",
   "description": "Calculate grade averages from Brightspace - D2L",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.brightspace.com/d2l/lms/grades/*", "*://*/d2l/lms/grades/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
