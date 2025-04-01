@@ -1,5 +1,3 @@
-// This script runs on the grades page and extracts grade information
-
 // Create and insert the in-page grade display
 function createInPageDisplay() {
   // Check if our display already exists
