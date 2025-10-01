@@ -17,63 +17,65 @@ function loadGradeData() {
 }
 
 function displayGrades(gradeData) {
-  // Display the averages
-  document.getElementById('current-grade').textContent = 
-    gradeData.currentGrade.toFixed(2) + '%';
-  document.getElementById('highest-possible').textContent = 
-    gradeData.highestPossible.toFixed(2) + '%';
+  const { totals, details } = gradeData;
+  const current = totals?.currentPoints ?? 0;
+  const highest = totals?.highestPossiblePoints ?? 0;
+  const max = totals?.totalMaxPoints ?? 0;
+
+  // Display absolute points: X/Y (no %)
+  document.getElementById('current-grade').textContent =
+    `${current.toFixed(2)}/${max.toFixed(2)}`;
+  document.getElementById('highest-possible').textContent =
+    `${highest.toFixed(2)}/${max.toFixed(2)}`;
   
   // Display the breakdown
   const detailsContainer = document.getElementById('grade-details');
   detailsContainer.innerHTML = '';
   
-  // Add explanation text
+  // Explanation
   const explanationEl = document.createElement('div');
   explanationEl.className = 'explanation';
   explanationEl.innerHTML = `
-    <p>Current: Your current grade based on completed assignments.</p>
-    <p>Highest Possible: Assumes you'll get 100% on all remaining assignments. We deemed assignment you got ZERO as remaining.</p>
+    <p>Current: Sum of points earned on graded items so far.</p>
+    <p>Highest Possible: Assumes full points on remaining ungraded items; points already lost on graded items cannot be recovered.</p>
   `;
   detailsContainer.appendChild(explanationEl);
   
-  // Add total summary
+  // Overall summary as X/Y
   const summaryEl = document.createElement('div');
   summaryEl.className = 'summary';
   summaryEl.innerHTML = `
     <div class="summary-title">Overall Summary</div>
     <div class="summary-row">
-      <span>Current Grade:</span>
-      <span class="value">${gradeData.currentGrade.toFixed(2)}%</span>
+      <span>Current:</span>
+      <span class="value">${current.toFixed(2)}/${max.toFixed(2)}</span>
     </div>
     <div class="summary-row">
       <span>Highest Possible:</span>
-      <span class="value">${gradeData.highestPossible.toFixed(2)}%</span>
+      <span class="value">${highest.toFixed(2)}/${max.toFixed(2)}</span>
     </div>
   `;
   detailsContainer.appendChild(summaryEl);
   
-  // Add category details
-  gradeData.details.forEach(category => {
+  // Category details (X/Y)
+  (details || []).forEach(category => {
     const categoryEl = document.createElement('div');
     categoryEl.className = 'category';
     
-    const currentPercent = ((category.achieved/category.total)*100).toFixed(1);
-    const highestPercent = ((category.highestPossible/category.total)*100).toFixed(1);
-    
-    const statusText = category.isFullyCompleted ? 
-      "All assignments completed" : 
+    const statusText = category.isFullyCompleted ?
+      "All assignments completed" :
       "Some assignments pending";
     
     categoryEl.innerHTML = `
       <div class="category-name">${category.name}</div>
       <div class="category-grades">
-        <div class="current">Current: ${category.achieved}/${category.total} (${currentPercent}%)</div>
-        <div class="possible">Highest: ${category.highestPossible}/${category.total} (${highestPercent}%)</div>
+        <div class="current">Current: ${Number(category.achieved ?? 0).toFixed(2)}/${Number(category.total ?? 0).toFixed(2)}</div>
+        <div class="possible">Highest: ${Number(category.highestPossible ?? 0).toFixed(2)}/${Number(category.total ?? 0).toFixed(2)}</div>
         <div class="status ${category.isFullyCompleted ? 'completed' : 'pending'}">${statusText}</div>
       </div>
     `;
     
-    // Add assignment details if available
+    // Assignment details if available
     if (category.assignments && category.assignments.length > 0) {
       const assignmentsEl = document.createElement('div');
       assignmentsEl.className = 'assignments';
@@ -81,17 +83,14 @@ function displayGrades(gradeData) {
       category.assignments.forEach(assignment => {
         if (assignment.isDropped) return; // Skip dropped assignments
         
+        const a = assignment.points || { achieved: 0, total: 0 };
         const assignmentEl = document.createElement('div');
         assignmentEl.className = `assignment ${assignment.isCompleted ? 'completed' : 'pending'}`;
-        
-        const pointsPercent = (assignment.points.total > 0) ? 
-          ((assignment.points.achieved / assignment.points.total) * 100).toFixed(1) + '%' : 
-          'N/A';
         
         assignmentEl.innerHTML = `
           <div class="assignment-name">${assignment.name}</div>
           <div class="assignment-score">
-            ${assignment.points.achieved}/${assignment.points.total} (${pointsPercent})
+            ${Number(a.achieved ?? 0).toFixed(2)}/${Number(a.total ?? 0).toFixed(2)}
           </div>
         `;
         

@@ -5,3 +5,5 @@
 *.gz
 *.bz2
 *.wim
+
+.idea
